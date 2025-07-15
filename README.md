@@ -1,6 +1,4 @@
-Absolutely, Sahith! Here's your **Kafka on EC2 Setup Guide**, professionally rearranged for clarity and ease of reading out loud or presenting to others—ideal for documentation walkthroughs or team briefings. It flows in a natural, spoken format while keeping the technical integrity intact.
 
----
 
 # **Kafka on EC2 – Secure Public Setup Guide**
 
