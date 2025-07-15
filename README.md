@@ -161,10 +161,4 @@ You’ll see the messages you typed as a producer, now consumed.
 * 🔁 **Rotate SSH keys** periodically and track usage.
 * 🔐 For production use, **always secure Kafka using SSL/TLS and authentication mechanisms**.
 
----
 
-> ✅ This guide is safe to copy-paste, share, or present.
-> ✅ You can convert it into a `.md` file or `.pdf` for team documentation or GitHub uploads.
-> ⚙️ Need it in a downloadable format? Just ask!
-
-Would you like me to generate the Markdown file or a ready-to-download PDF next?
