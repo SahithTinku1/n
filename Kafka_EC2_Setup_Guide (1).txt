@@ -1,0 +1,66 @@
+
+Kafka on EC2 – Setup Guide (Updated for Public IP: 3.109.153.13)
+================================================================
+
+1. Download & Extract Kafka
+---------------------------
+wget https://archive.apache.org/dist/kafka/3.3.1/kafka_2.12-3.3.1.tgz
+tar -xvf kafka_2.12-3.3.1.tgz
+cd kafka_2.12-3.3.1
+
+2. SSH into EC2
+---------------
+ssh -i "kafka-stock-final.pem" ec2-user@ec2-3-109-153-13.ap-south-1.compute.amazonaws.com
+
+3. Install Java 8 (if not already)
+----------------------------------
+sudo yum install java-1.8.0-openjdk -y
+java -version
+
+4. Configure Kafka for Public IP
+--------------------------------
+cd kafka_2.12-3.3.1
+sudo nano config/server.properties
+
+Edit the following lines:
+# Comment default advertised.listeners
+# advertised.listeners=PLAINTEXT://:9092
+
+# Add your public IP
+advertised.listeners=PLAINTEXT://3.109.153.13:9092
+
+# Ensure this line exists
+listeners=PLAINTEXT://0.0.0.0:9092
+
+Save and exit (Ctrl + X, Y, Enter)
+
+5. Start ZooKeeper
+------------------
+cd kafka_2.12-3.3.1
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+6. Start Kafka Server (New SSH window)
+--------------------------------------
+ssh -i "kafka-stock-final.pem" ec2-user@ec2-3-109-153-13.ap-south-1.compute.amazonaws.com
+
+export KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"
+cd kafka_2.12-3.3.1
+bin/kafka-server-start.sh config/server.properties
+
+7. Create Kafka Topic
+---------------------
+cd kafka_2.12-3.3.1
+bin/kafka-topics.sh --create --topic demo_testing --bootstrap-server 3.109.153.13:9092 --replication-factor 1 --partitions 1
+
+8. Start Kafka Producer
+-----------------------
+bin/kafka-console-producer.sh --topic demo_testing --bootstrap-server 3.109.153.13:9092
+
+9. Start Kafka Consumer
+-----------------------
+bin/kafka-console-consumer.sh --topic demo_testing --bootstrap-server 3.109.153.13:9092 --from-beginning
+
+NOTE:
+-----
+- Ensure port 9092 is open in your EC2 security group
+- Use the same topic name in producer and consumer
